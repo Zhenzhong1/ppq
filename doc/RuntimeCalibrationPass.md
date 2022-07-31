@@ -36,6 +36,17 @@ This dataset is supposed to be a small subset (around ~100-500 samples) of the t
 
         This parameter is introduced since ppq 0.6.4
 
+### Observer Support Matrix:
+| observer     | Symmetrical | Asymmetrical | Per-chanel | Per-tensor | Cuda Acceleration   |
+| ---          | ---         | ---          | ---        | ---        | ---                 |
+| minmax       | &#10004;         | &#10004;          | &#10004;        | &#10004;        |                  |
+| mse          | &#10004;         | &#10004;          |         | &#10004;        | &#10004;                 |
+| precentile   | &#10004;         | &#10004;          | &#10004;        | &#10004;        | &#10004;               |
+| kl           | &#10004;         |          |        | &#10004;        | &#10004;                 |
+| isotone      | &#10004;         | &#10004;          |          | &#10004;        |                 |
+
+If possible, using Cuda kernel can speed up observer by 10~100x.
+
 ### Usage:
 
 Runtime Calibration Pass should be invoked before Passive Parameter Quantize Pass
@@ -57,3 +68,10 @@ You can manually create this optimization by:
     from ppq import RuntimeCalibrationPass
 
     optim = RuntimeCalibrationPass()
+
+### Register Calibration Method:
+
+Using api function register_calibration_observer to resister new observer algorithm to PPQ system.
+Once Algorithm is registered, Runtime Calibration Pass will automatically calling them by name.
+
+This feature requires PPQ > 0.6.5
